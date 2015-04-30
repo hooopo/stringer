@@ -20,7 +20,7 @@ group :development, :test do
   gem "shotgun", "~> 0.9.0"
   gem "timecop", "~> 0.7.1"
 end
-
+gem "pocket-ruby"
 gem "activerecord", "~> 4.0"
 gem "arel", "~> 4.0.2"
 gem "bcrypt-ruby", "~> 3.1.2"

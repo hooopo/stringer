@@ -8,12 +8,20 @@ require "json"
 require "i18n"
 require "will_paginate"
 require "will_paginate/active_record"
+require "pocket-ruby"
+require 'securerandom'
 
 require_relative "app/helpers/authentication_helpers"
 require_relative "app/repositories/user_repository"
 
 I18n.load_path += Dir[File.join(File.dirname(__FILE__), 'config/locales', '*.yml').to_s]
 I18n.config.enforce_available_locales=false
+
+Pocket.configure do |config|
+  config.consumer_key = '40696-194e012f98abc31844742f25'
+end
+
+CALLBACK_URL = "http://localhost:2222/oauth/callback"
 
 class Stringer < Sinatra::Base
   # need to exclude assets for sinatra assetpack, see https://github.com/swanson/stringer/issues/112
@@ -96,10 +104,10 @@ class Stringer < Sinatra::Base
   end
 
   get "/" do
-    if UserRepository.setup_complete?
+    if current_user
       redirect to("/news")
     else
-      redirect to("/setup/password")
+      redirect to("/login")
     end
   end
 end
@@ -109,3 +117,4 @@ require_relative "app/controllers/first_run_controller"
 require_relative "app/controllers/sessions_controller"
 require_relative "app/controllers/feeds_controller"
 require_relative "app/controllers/debug_controller"
+require_relative "app/controllers/oauth_controller"

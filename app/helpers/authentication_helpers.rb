@@ -12,6 +12,7 @@ module Sinatra
       return false if ENV['RACK_ENV'] == 'test'
       return false if !UserRepository.setup_complete?
       return false if path == "/login" || path == "/logout"
+      return false if path == "/oauth/connect" || path == "/oauth/callback"
       return false if path =~ /css/ || path =~ /js/ || path =~ /img/
       return false if path == "/heroku"
       true

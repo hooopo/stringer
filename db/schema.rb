@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141102103617) do
+ActiveRecord::Schema.define(version: 20150430194830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,8 +25,8 @@ ActiveRecord::Schema.define(version: 20141102103617) do
     t.datetime "failed_at"
     t.string   "locked_by"
     t.string   "queue"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 20141102103617) do
     t.string   "name"
     t.text     "url"
     t.datetime "last_fetched"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "status"
     t.integer  "group_id"
   end
@@ -54,8 +54,8 @@ ActiveRecord::Schema.define(version: 20141102103617) do
     t.text     "permalink"
     t.text     "body"
     t.integer  "feed_id"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.datetime "published"
     t.boolean  "is_read"
     t.boolean  "keep_unread", default: false
@@ -66,11 +66,14 @@ ActiveRecord::Schema.define(version: 20141102103617) do
   add_index "stories", ["entry_id", "feed_id"], name: "index_stories_on_entry_id_and_feed_id", unique: true, using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "password_digest"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.boolean  "setup_complete"
     t.string   "api_key"
+    t.string   "access_token"
+    t.string   "username"
   end
+
+  add_index "users", ["access_token"], name: "index_users_on_access_token", using: :btree
 
 end

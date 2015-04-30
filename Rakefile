@@ -12,7 +12,6 @@ require "sinatra/activerecord/rake"
 require "./app"
 require_relative "./app/jobs/fetch_feed_job"
 require_relative "./app/tasks/fetch_feeds"
-require_relative "./app/tasks/change_password"
 require_relative "./app/tasks/remove_old_stories.rb"
 
 desc "Fetch all feeds."
@@ -47,7 +46,7 @@ task :work_jobs do
   Delayed::Job.delete_all
 
   3.times do
-    Delayed::Worker.new(:min_priority => ENV['MIN_PRIORITY'], 
+    Delayed::Worker.new(:min_priority => ENV['MIN_PRIORITY'],
       :max_priority => ENV['MAX_PRIORITY']).start
   end
 end
