@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150430194830) do
+ActiveRecord::Schema.define(version: 20150505100135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,15 +39,20 @@ ActiveRecord::Schema.define(version: 20150430194830) do
     t.datetime "updated_at"
     t.integer  "status"
     t.integer  "group_id"
+    t.integer  "user_id"
   end
 
   add_index "feeds", ["url"], name: "index_feeds_on_url", unique: true, using: :btree
+  add_index "feeds", ["user_id"], name: "index_feeds_on_user_id", using: :btree
 
   create_table "groups", force: true do |t|
     t.string   "name",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
   end
+
+  add_index "groups", ["user_id"], name: "index_groups_on_user_id", using: :btree
 
   create_table "stories", force: true do |t|
     t.text     "title"
@@ -61,9 +66,11 @@ ActiveRecord::Schema.define(version: 20150430194830) do
     t.boolean  "keep_unread", default: false
     t.boolean  "is_starred",  default: false
     t.text     "entry_id"
+    t.integer  "user_id"
   end
 
   add_index "stories", ["entry_id", "feed_id"], name: "index_stories_on_entry_id_and_feed_id", unique: true, using: :btree
+  add_index "stories", ["user_id"], name: "index_stories_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.datetime "created_at"
