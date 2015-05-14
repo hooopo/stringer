@@ -3,8 +3,8 @@ require_relative "../models/feed"
 class FeedRepository
   MIN_YEAR = 1970
 
-  def self.fetch(id)
-    Feed.find(id)
+  def self.fetch(id, user)
+    user.feeds.find(id)
   end
 
   def self.fetch_by_ids(ids)
@@ -24,8 +24,8 @@ class FeedRepository
     end
   end
 
-  def self.delete(feed_id)
-    Feed.destroy(feed_id)
+  def self.delete(feed_id, user)
+    user.feeds.destroy(feed_id)
   end
 
   def self.set_status(status, feed)
@@ -33,8 +33,8 @@ class FeedRepository
     feed.save
   end
 
-  def self.list
-    Feed.order('lower(name)')
+  def self.list(user_id)
+    Feed.order('lower(name)').where(:user_id => user_id)
   end
 
   def self.in_group

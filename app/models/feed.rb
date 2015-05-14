@@ -1,8 +1,9 @@
 class Feed < ActiveRecord::Base
   has_many :stories, -> {order "published desc"} , dependent: :delete_all
   belongs_to :group
+  belongs_to :user
 
-  validates_uniqueness_of :url
+  validates_uniqueness_of :url, :scope => :user_id
 
   STATUS = { green: 0, yellow: 1, red: 2 }
 

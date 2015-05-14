@@ -2,6 +2,7 @@ require_relative "./feed"
 
 class Story < ActiveRecord::Base
   belongs_to :feed
+  belongs_to :user
 
   validates_uniqueness_of :entry_id, scope: :feed_id
 

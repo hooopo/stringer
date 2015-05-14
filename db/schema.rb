@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150505100135) do
+ActiveRecord::Schema.define(version: 20150514192714) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,8 +42,8 @@ ActiveRecord::Schema.define(version: 20150505100135) do
     t.integer  "user_id"
   end
 
-  add_index "feeds", ["url"], name: "index_feeds_on_url", unique: true, using: :btree
-  add_index "feeds", ["user_id"], name: "index_feeds_on_user_id", using: :btree
+  add_index "feeds", ["url"], name: "index_feeds_on_url", using: :btree
+  add_index "feeds", ["user_id", "url"], name: "index_feeds_on_user_id_and_url", unique: true, using: :btree
 
   create_table "groups", force: true do |t|
     t.string   "name",       null: false
