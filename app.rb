@@ -14,6 +14,8 @@ require 'securerandom'
 require_relative "app/helpers/authentication_helpers"
 require_relative "app/repositories/user_repository"
 
+Dotenv.load
+
 I18n.load_path += Dir[File.join(File.dirname(__FILE__), 'config/locales', '*.yml').to_s]
 I18n.config.enforce_available_locales=false
 
