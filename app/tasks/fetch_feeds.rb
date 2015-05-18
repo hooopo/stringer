@@ -20,7 +20,7 @@ class FetchFeeds
     @pool.shutdown
   end
 
-  def self.enqueue(feeds)
-    self.new(feeds).delay.fetch_all
+  def self.fetch_all(feeds)
+    self.new(feeds).fetch_all
   end
 end

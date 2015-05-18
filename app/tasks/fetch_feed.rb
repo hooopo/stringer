@@ -3,10 +3,11 @@ require "feedjira"
 require_relative "../repositories/story_repository"
 require_relative "../repositories/feed_repository"
 require_relative "../commands/feeds/find_new_stories"
+require_relative "../commands/pockets/add_to_pocket"
 
 class FetchFeed
 
-  USER_AGENT = "Stringer (https://github.com/swanson/stringer)"
+  USER_AGENT = "Stringer (https://github.com/hooopo/stringer)"
 
   def initialize(feed, parser: Feedjira::Feed, logger: nil)
     @feed = feed
@@ -17,13 +18,13 @@ class FetchFeed
   def fetch
     begin
       options = {
-        user_agent: USER_AGENT, 
-        if_modified_since: @feed.last_fetched, 
-        timeout: 30, 
+        user_agent: USER_AGENT,
+        if_modified_since: @feed.last_fetched,
+        timeout: 30,
         max_redirects: 2,
         compress: true
       }
-      
+
       raw_feed = @parser.fetch_and_parse(@feed.url, options)
 
       if raw_feed == 304
@@ -31,6 +32,7 @@ class FetchFeed
       else
         new_entries_from(raw_feed).each do |entry|
           StoryRepository.add(entry, @feed)
+          AddToPocket.add(entry, @feed.user)
         end
 
         FeedRepository.update_last_fetched(@feed, raw_feed.last_modified)

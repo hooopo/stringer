@@ -19,41 +19,9 @@ task :fetch_feeds do
   FetchFeeds.new(Feed.all).fetch_all
 end
 
-desc "Lazily fetch all feeds."
-task :lazy_fetch do
-  if ENV['APP_URL']
-    uri = URI(ENV['APP_URL'])
-    Net::HTTP.get_response(uri)
-  end
-
-  FeedRepository.list.each do |feed|
-    Delayed::Job.enqueue FetchFeedJob.new(feed.id)
-  end
-end
-
 desc "Fetch single feed"
 task :fetch_feed, :id do |t, args|
   FetchFeed.new(Feed.find(args[:id])).fetch
-end
-
-desc "Clear the delayed_job queue."
-task :clear_jobs do
-  Delayed::Job.delete_all
-end
-
-desc "Work the delayed_job queue."
-task :work_jobs do
-  Delayed::Job.delete_all
-
-  3.times do
-    Delayed::Worker.new(:min_priority => ENV['MIN_PRIORITY'],
-      :max_priority => ENV['MAX_PRIORITY']).start
-  end
-end
-
-desc "Change your password"
-task :change_password do
-  ChangePassword.new.change_password
 end
 
 desc "Clean up old stories that are read and unstarred"

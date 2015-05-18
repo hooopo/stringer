@@ -25,7 +25,7 @@ I18n.load_path += Dir[File.join(File.dirname(__FILE__), 'config/locales', '*.yml
 I18n.config.enforce_available_locales=false
 
 Pocket.configure do |config|
-  config.consumer_key = '40696-194e012f98abc31844742f25'
+  config.consumer_key = ENV["pocket_consumer_key"]
 end
 
 CALLBACK_URL = "http://localhost:2222/oauth/callback"

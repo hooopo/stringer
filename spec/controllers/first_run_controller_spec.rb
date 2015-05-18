@@ -56,7 +56,7 @@ describe "FirstRunController" do
 
       it "displays the tutorial and completes setup" do
         CompleteSetup.should_receive(:complete).with(user).once
-        FetchFeeds.should_receive(:enqueue).with(feeds).once
+        FetchFeeds.should_receive(:fetch_all).with(feeds).once
         
         get "/setup/tutorial"
 
