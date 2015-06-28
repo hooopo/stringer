@@ -1,5 +1,6 @@
 source "https://rubygems.org"
 gem "skylight"
+gem "rainbows"
 group :production do
   gem "pg", "~> 0.17.1"
   gem "unicorn", "~> 4.7"

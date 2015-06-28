@@ -100,6 +100,10 @@ GEM
     racksh (1.0.0)
       rack (>= 1.0)
       rack-test (>= 0.5)
+    rainbows (4.5.0)
+      kgio (~> 2.5)
+      rack (~> 1.1)
+      unicorn (~> 4.6, >= 4.6.2)
     raindrops (0.13.0)
     rake (10.1.1)
     rest-client (1.6.7)
@@ -192,6 +196,7 @@ DEPENDENCIES
   rack-ssl (~> 1.4.1)
   rack-test (~> 0.6.2)
   racksh (~> 1.0)
+  rainbows
   rake (~> 10.1, >= 10.1.1)
   rspec (~> 2.14, >= 2.14.1)
   rspec-html-matchers (~> 0.4.3)
@@ -207,3 +212,6 @@ DEPENDENCIES
   timecop (~> 0.7.1)
   unicorn (~> 4.7)
   will_paginate (~> 3.0, >= 3.0.5)
+
+BUNDLED WITH
+   1.10.4
